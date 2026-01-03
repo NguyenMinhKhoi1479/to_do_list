@@ -142,6 +142,7 @@
         .main-dialog {
             border: 0px solid transparent;
             padding: 0px;
+            background-color: var(--background-color);
         }
 
         .main-dialog .form-dialog {
@@ -151,7 +152,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
-            background-color: var(--background-color);
+            background-color: var(--header-color);
             border: 0px solid transparent;
         }
 
@@ -177,9 +178,16 @@
             align-self: center;
             font-size: 1.2em;
             padding: 5px 10px;
-            border: 2px solid rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
+            border-top: 0px;
+            border-left: 0px;
+            border-right: 0px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
             background-color: var(--header-color);
+        }
+
+        .main-dialog .form-dialog input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
         }
 
         .main-dialog .form-dialog div {
@@ -208,14 +216,17 @@
         .main-dialog .form-dialog textarea {
             width: 90%;
             height: 200px;
+            line-height: 40px;
             align-self: center;
             font-size: 1.2em;
             padding: 5px 10px;
-            border: 2px solid rgba(0, 0, 0, 0.2);
+            border: 0px solid transparent;
             border-radius: 5px;
             resize: none;
             background-color: var(--header-color);
         }
+
+
 
         .main-dialog .form-dialog .deadline-input {
             width: 90%;
@@ -230,33 +241,57 @@
             width: 90%;
             height: 40px;
             font-size: 1.2em;
+            user-select: none;
             padding: 5px 10px;
             border: 2px solid rgba(0, 0, 0, 0.2);
             border-radius: 5px;
             background-color: var(--header-color);
         }
 
+        article {
+            column-width: 300px;
+            /*column width */
+            padding: 10px;
+            column-gap: 10px;
+        }
+
         article .note {
-            width: 25%;
+            break-inside: avoid;
+            /* make note don't be break */
+            margin-bottom: 10px;
+
             background-color: var(--note-color);
-            margin: 10px;
+            max-height: 600px;
             padding: 0px 10px 10px 10px;
-            min-height: 250px;
             min-width: 250px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
             cursor: grab;
             user-select: none;
+            transition:
+                opacity 0.25s ease,
+                transform 0.25s ease,
+                max-height 0.25s ease,
+                margin 0.25s ease,
+                padding 0.25s ease;
+        }
+
+        article .note.removing{
+            opacity: 0;
+            transform: scale(0.95);
+            max-height: 0px;
+            margin: 0px;
+            padding: 0px;
         }
 
         article .note div {
             gap: 10px;
             display: flex;
             justify-content: flex-end;
-            padding-left: 100px;
+            padding-left: auto;
         }
 
         article .note h1 {
@@ -264,14 +299,20 @@
             font-size: 2.5em;
             font-weight: bolder;
             color: #111827;
+            overflow: hidden;
+            overflow-wrap: break-word;
+            min-height: 0px;
         }
 
         article .note h2 {
-            font-size: 2em;
+            font-size: 1.5em;
             margin: 10px 0px;
             font-weight: bolder;
             color: #4B5563;
-            min-height: 250px;
+            min-height: 0px;
+            max-height: 800px;
+            overflow: hidden;
+            overflow-wrap: break-word;
         }
 
         article .note h3 {
@@ -281,19 +322,10 @@
             color: rgb(50, 50, 50);
         }
 
-
-        article button {
-            width: 36px;
-            height: 36px;
-            background-color: var(--header-color);
-            border-radius: 0.75em;
-            border: 0px solid black;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+        article .note:hover {
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
         }
 
-        article button:hover {
-            background-color: var(--hover-color);
-        }
         header ul .icon {
             font-size: 36px;
         }
@@ -317,39 +349,62 @@
     <main>
         <div class="floating-add-button">+</div>
         <aside></aside>
-        <article name="note-list">
-            <div class="note">
-                <h1>header</h1>
-                <h2>des</h2>
+        <article id="note-list">
+            <!-- this is the container of note-->
+            <!-- <div data-id="" class="note">
+                <h1 class="header">header</h1>
+                <h2 class="des">des</h2>
                 <ul>
                 </ul>
                 <div>
-                    <h3>date</h3>
-                    <h3>time</h3>
+                    <h3 class="date">date</h3>
+                    <h3 class="time">time</h3>
                 </div>
-            </div>
+            </div> -->
         </article>
+
+        <!--dialog edit and delete note-->
+        <dialog class="main-dialog" id="note-dialog">
+            <form action="" class="form-dialog" method="dialog">
+                <input id="note-header" placeholder="Header" type="text">
+                <textarea id="note-des" placeholder="Description" rows="15"></textarea>
+                <h2>deadline</h2>
+                <div class="deadline-input">
+                    <label for="date">select date</label>
+                    <input id="note-date" name="date" type="date">
+                    <label for="time">select time</label>
+                    <input id="note-time" name="time" type="time">
+                </div>
+                <div>
+                    <button id="save-button">Save</button>
+                    <button id="cancle-button">Cancel</button>
+                    <button id="delete">Delete</button>
+                </div>
+            </form>
+        </dialog>
+
+        <!--add expand to show deadline cofig-->
         <dialog class="main-dialog" id="add-button-dialog">
-                <form action="" class="form-dialog" method="dialog">
-                    <h1>new task</h1>
-                    <input placeholder="Header" type="text">
-                    <textarea placeholder="Description" rows="15"></textarea>
-                    <h2>deadline</h2>
-                    <div class="deadline-input">
-                        <label for="date">select date</label>
-                        <input name="date" type="date">
-                        <label for="time">select time</label>
-                        <input name="time" type="time">
-                    </div>
-                    <div>
-                        <button id="save-button">Save</button>
-                        <button id="cancle-button">Cancel</button>
-                    </div>
-                </form>
-            </dialog>
+            <form action="" class="form-dialog" method="dialog">
+                <input placeholder="Header" type="text">
+                <textarea placeholder="Description" rows="15"></textarea>
+                <h2>deadline</h2>
+                <div class="deadline-input">
+                    <label for="date">select date</label>
+                    <input name="date" type="date">
+                    <label for="time">select time</label>
+                    <input name="time" type="time">
+                </div>
+                <div>
+                    <button id="save-button">Save</button>
+                    <button id="cancle-button">Cancel</button>
+                </div>
+            </form>
+        </dialog>
     </main>
     <footer></footer>
+    <script src="js/dialog.js"></script>
+    <script src="js/CRUD_note.js"></script>
 </body>
-<script src="js/dialog.js"></script>
-<script src="js/CRUD_note.js"></script>
+
 </html>
