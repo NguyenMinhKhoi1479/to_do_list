@@ -8,12 +8,7 @@ from sqlite3 import Connection
 from error import Missing, Duplicate
 import auth
 
-
-
 router = APIRouter(prefix=("/user"))
-
-
-
 
 def unauthed():
     raise HTTPException(

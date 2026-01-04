@@ -1,0 +1,321 @@
+:root {
+    --background-color: #FFFBEA;
+    /* nền vàng rất nhạt */
+    --header-color: #FFF1A8;
+    /* header vàng pastel */
+    --hover-color: #F3E37C;
+    /* hover dịu, không gắt */
+    --aside-color: #FFE680;
+    /* aside nổi nhẹ */
+    --note-color: #FFEB99;
+    /* note êm mắt */
+}
+
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    min-height: 2000px;
+    align-self: center;
+    background-color: var(--background-color);
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: var(--header-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header ul {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0;
+    padding: 10px 20px;
+    height: fit-content;
+    border: 1px solid #fff;
+}
+
+header ul nav {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: rgb(50, 50, 50);
+    background-color: transparent;
+    padding: 5px 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+header ul nav:hover {
+    background-color: var(--hover-color)
+}
+
+header ul div {
+    display: flex;
+    gap: 10px;
+}
+
+main {
+    display: flex;
+    margin-top: 100px;
+    gap: 10px;
+    padding: 5px 5px;
+    justify-content: space-between;
+}
+
+main aside {
+    width: 20%;
+    min-height: 500px;
+    background-color: var(--aside-color);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 0px 50px 50px 0px;
+}
+
+main article {
+    width: 80%;
+    min-height: 500px;
+    background-color: var(--background-color);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.floating-add-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--header-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 50px;
+    color: rgb(50, 50, 50);
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.floating-add-button:hover {
+    background-color: var(--hover-color);
+}
+
+/* .main-dialog{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            padding: 0px;
+            min-height: 500px;
+            width: 400px;
+        } */
+.main-dialog {
+    border: 0px solid transparent;
+    padding: 0px;
+    background-color: var(--background-color);
+}
+
+.main-dialog .form-dialog {
+    min-height: 650px;
+    min-width: 500px;
+    padding: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: var(--header-color);
+    border: 0px solid transparent;
+}
+
+.main-dialog .form-dialog h1 {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bolder;
+    color: rgb(50, 50, 50);
+    text-transform: uppercase;
+}
+
+.main-dialog .form-dialog h2 {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bolder;
+    color: rgb(50, 50, 50);
+    text-transform: uppercase;
+}
+
+.main-dialog .form-dialog input[type="text"] {
+    width: 90%;
+    height: 40px;
+    align-self: center;
+    font-size: 1.2em;
+    padding: 5px 10px;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: var(--header-color);
+}
+
+.main-dialog .form-dialog input[type="text"]:focus,
+textarea:focus {
+    outline: none;
+}
+
+.main-dialog .form-dialog div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.main-dialog .form-dialog div button {
+    width: 100px;
+    height: 40px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: rgb(50, 50, 50);
+    background-color: var(--header-color);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.main-dialog .form-dialog div button:hover {
+    background-color: var(--hover-color);
+}
+
+.main-dialog .form-dialog textarea {
+    width: 90%;
+    height: 200px;
+    line-height: 40px;
+    align-self: center;
+    font-size: 1.2em;
+    padding: 5px 10px;
+    border: 0px solid transparent;
+    border-radius: 5px;
+    resize: none;
+    background-color: var(--header-color);
+}
+
+
+
+.main-dialog .form-dialog .deadline-input {
+    width: 90%;
+    align-self: center;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.main-dialog .form-dialog .deadline-input input[type="date"],
+.main-dialog .form-dialog .deadline-input input[type="time"] {
+    width: 90%;
+    height: 40px;
+    font-size: 1.2em;
+    user-select: none;
+    padding: 5px 10px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    background-color: var(--header-color);
+}
+
+article {
+    column-width: 300px;
+    /*column width */
+    padding: 10px;
+    column-gap: 10px;
+}
+
+article .note {
+    break-inside: avoid;
+    /* make note don't be break */
+    margin-bottom: 10px;
+
+    background-color: var(--note-color);
+    max-height: 600px;
+    padding: 0px 10px 10px 10px;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    cursor: grab;
+    user-select: none;
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        max-height 0.25s ease,
+        margin 0.25s ease,
+        padding 0.25s ease;
+}
+
+article .note.removing {
+    opacity: 0;
+    transform: scale(0.95);
+    max-height: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+article .note div {
+    gap: 10px;
+    display: flex;
+    justify-content: flex-end;
+    padding-left: auto;
+}
+
+article .note h1 {
+    margin: 10px 0px;
+    font-size: 2.5em;
+    font-weight: bolder;
+    color: #111827;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    min-height: 50px;
+}
+
+article .note h2 {
+    font-size: 1.5em;
+    margin: 10px 0px;
+    font-weight: bolder;
+    color: #4B5563;
+    min-height: 0px;
+    max-height: 800px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
+
+article .note h3 {
+    font-size: 1.5em;
+    margin: 10px 0px;
+    font-weight: bolder;
+    color: rgb(50, 50, 50);
+}
+
+article .note:hover {
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+header ul .icon {
+    font-size: 36px;
+}

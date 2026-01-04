@@ -1,5 +1,7 @@
 const note_list = document.getElementById("note-list");
-var note_dialog = document.getElementById('note-dialog')
+var note_dialog = document.getElementById('note-dialog');
+var dialog = document.getElementById('add-button-dialog');
+
 let current_id = null
 let data_set = [
     {
@@ -19,7 +21,7 @@ let data_set = [
     {
         id: "8",
         header: "header 8",
-        des: "awdadasdddddddddddddddawdasdawdasdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd 2",
+        des: "des 2",
         date: "2024-10-02",
         time: "11:00"
     },
@@ -55,7 +57,7 @@ let data_set = [
     ,
 
     {
-        id: "8",
+        id: "9",
         header: "header 7",
         des: "description 2",
         date: "2024-10-02",
@@ -63,10 +65,23 @@ let data_set = [
     }
 ];
 
+
+function add_note() {
+    let new_note = {
+        id: Math.random().toString(36).substring(2, 10),
+        header: dialog.querySelector("#header").value,
+        des: dialog.querySelector("#des").value,
+        date: dialog.querySelector("#date").value,
+        time: dialog.querySelector("#time").value
+    }
+    if (new_note.header == "" && new_note.des == "") return;
+    data_set.push(new_note)
+}
+
 function refresh_note_list() {
     note_list.innerHTML = data_set.map(
         value => `
-            <div data-id="${value.id}" class="note">
+            <div  data-id="${value.id}" class="note">
                 <h1 class="header">${value.header}</h1>
                 <h2 class="des">${value.des}</h2>
                 <ul>
@@ -137,9 +152,15 @@ function load_data_for_dialog(obj) {
         </dialog>
 */
 
+dialog.querySelector('#add').addEventListener("click", () => {
+    add_note()
+    refresh_note_list()
+})
+
+
+//note-dialog
 note_dialog.querySelector("#delete").addEventListener('click', () => {
     if (!current_id) return;
-
     note_dialog.close();
     deleteNoteAnimation(current_id);
 });
@@ -164,7 +185,14 @@ note_list.addEventListener('click', function (e) {
     open_edit_dialog(id)
 })
 
-
+add_button.addEventListener('click', function () {
+    // dialog.showModal();
+    dialog.querySelector("#header").value = ""
+    dialog.querySelector("#des").value = ""
+    dialog.querySelector("#date").value = null
+    dialog.querySelector("#time").value = null
+    dialog.showModal();
+});
 refresh_note_list()
 /*
 <div data-id="" class="note">
