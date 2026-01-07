@@ -1,76 +1,35 @@
+import { get_all, get_one, delete_task, create_task, modify_task } from "../api/task.js";
+
 const note_list = document.getElementById("note-list");
 var note_dialog = document.getElementById('note-dialog');
 var dialog = document.getElementById('add-button-dialog');
+var add_button = document.getElementById('floating-add-button');
 
 let current_id = null
-let data_set = [
-    {
-        id: "1",
-        header: "header 1",
-        des: "description 1",
-        date: "2024-10-01",
-        time: "10:00"
-    },
-    {
-        id: "2",
-        header: "header 2",
-        des: "description 2",
-        date: "2024-10-02",
-        time: "11:00"
-    },
-    {
-        id: "8",
-        header: "header 8",
-        des: "des 2",
-        date: "2024-10-02",
-        time: "11:00"
-    },
-    {
-        id: "3",
-        header: "header 3",
-        des: "description 2",
-        date: "2024-10-02",
-        time: "11:00"
-    },
-    {
-        id: "4",
-        header: "header 4",
-        des: "description 2",
-        date: "2024-10-02",
-        time: "11:00"
-    },
-    {
-        id: "6",
-        header: "header 6",
-        des: "",
-        date: "2024-10-02",
-        time: "11:00"
-    },
+let data_set = [];
 
-    {
-        id: "7",
-        header: "header 7",
-        des: "description 2",
-        date: "2024-10-02",
-        time: "11:00"
-    }
-    ,
-
-    {
-        id: "9",
-        header: "header 7",
-        des: "description 2",
-        date: "2024-10-02",
-        time: "11:00"
-    }
-];
+async function load_all_note() {
+    const note_list = await get_all()
+    note_list.forEach(note => {
+        data_set.push({
+            id: String(note.id),
+            header: note.header,
+            description: note.detail,
+            is_important: note.is_important,
+            date: note.exp_date,
+            time: note.exp_time
+        })
+        console.log(note)
+    });
+}
+//load on start
 
 
 function add_note() {
     let new_note = {
         id: Math.random().toString(36).substring(2, 10),
         header: dialog.querySelector("#header").value,
-        des: dialog.querySelector("#des").value,
+        description: dialog.querySelector("#des").value,
         date: dialog.querySelector("#date").value,
         time: dialog.querySelector("#time").value
     }
@@ -83,7 +42,7 @@ function refresh_note_list() {
         value => `
             <div  data-id="${value.id}" class="note">
                 <h1 class="header">${value.header}</h1>
-                <h2 class="des">${value.des}</h2>
+                <h2 class="des">${value.description}</h2>
                 <ul>
                 </ul>
                 <div>
@@ -124,7 +83,7 @@ function deleteNoteAnimation(id) {
 /* only document have getElementById*/
 function load_data_for_dialog(obj) {
     note_dialog.querySelector("#note-header").value = obj.header
-    note_dialog.querySelector("#note-des").value = obj.des
+    note_dialog.querySelector("#note-des").value = obj.description
     note_dialog.querySelector("#note-date").value = obj.date
     note_dialog.querySelector("#note-time").value = obj.time
 }
@@ -165,16 +124,29 @@ note_dialog.querySelector("#delete").addEventListener('click', () => {
     deleteNoteAnimation(current_id);
 });
 
-note_dialog.querySelector("#save-button").addEventListener('click', () => {
+note_dialog.querySelector("#save-button").addEventListener('click', async () => {
     if (!current_id) return;
-    obj = data_set.find(item => item.id === current_id)
+    let obj = data_set.find(item => item.id === current_id)
     if (!obj) return;
 
-    obj.header = note_dialog.querySelector("#note-header").value
-    obj.des = note_dialog.querySelector("#note-des").value
-    obj.date = note_dialog.querySelector("#note-date").value
-    obj.time = note_dialog.querySelector("#note-time").value
-    refresh_note_list()
+    let update_obj = {
+        header : note_dialog.querySelector("#note-header").value,
+        description : note_dialog.querySelector("#note-des").value,
+        is_important: false,
+        date : note_dialog.querySelector("#note-date").value,
+        time : note_dialog.querySelector("#note-time").value
+    }
+    try{
+        var response = await modify_task(current_id,update_obj)
+        Object.assign(obj,update_obj)
+        refresh_note_list();
+        console.log(response)
+        console.log("update complete")
+    }
+    catch(err){
+        console.error("update false",err)
+        alert("update false")
+    }
 })
 
 note_list.addEventListener('click', function (e) {
@@ -182,7 +154,7 @@ note_list.addEventListener('click', function (e) {
     if (!note_elm) return;
     let id = note_elm.dataset.id
     current_id = id
-    open_edit_dialog(id)
+    open_edit_dialog(current_id)
 })
 
 add_button.addEventListener('click', function () {
@@ -193,16 +165,8 @@ add_button.addEventListener('click', function () {
     dialog.querySelector("#time").value = null
     dialog.showModal();
 });
+
+
+//init
+await load_all_note()
 refresh_note_list()
-/*
-<div data-id="" class="note">
-    <h1 class="header">header</h1>
-    <h2 class="des">des</h2>
-    <ul>
-    </ul>
-    <div>
-        <h3 class="date">date</h3>
-        <h3 class="time">time</h3>
-    </div>
-</div>
-*/

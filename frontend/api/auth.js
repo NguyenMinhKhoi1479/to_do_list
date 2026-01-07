@@ -14,6 +14,7 @@ export async function apiFetch(url, options = {}) { //param url is the api url, 
     const token = localStorage.getItem("token");
 
     const headers = {
+        "Content-Type": "application/json",
         ...options.headers
     }
 
@@ -21,10 +22,26 @@ export async function apiFetch(url, options = {}) { //param url is the api url, 
         headers["Authorization"] = `Bearer ${token}`
     }
 
-    return fetch(API_BASE+url,{
+    const response = await fetch(API_BASE + url,{
         ...options,
         headers
     });
+
+
+    if(response.status === 403 || response.status === 401){
+        localStorage.removeItem("token")
+
+        //return to login menu
+        window.location.href = "/login"
+        throw new Error(unauthorized)
+    }
+
+    if(!response.ok){
+        const err = await response.json();
+        throw err;
+    }
+
+    return response
 }
 
 export async function login(username, pwd) {

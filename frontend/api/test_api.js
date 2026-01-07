@@ -1,4 +1,4 @@
-import { login } from "./api_user.js";
+import { login } from "./auth.js";
 import { getAllUser } from "./user.js";
 
 async function run() {

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class Task(BaseModel):
     id: int
@@ -19,11 +20,11 @@ class Create_Task(BaseModel):
 
 
 class Task_Create_by_User(BaseModel):
-    header: str
-    detail: str
-    is_important: bool
-    exp_date: str
-    exp_time: str
+    header: Optional[str] = None
+    detail: Optional[str] = None
+    is_important: Optional[bool] = None
+    exp_date: Optional[str] = None
+    exp_time: Optional[str] = None
 
 
 class Task_Response(BaseModel):

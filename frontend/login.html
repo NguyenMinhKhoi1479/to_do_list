@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root {
+            --background-color: #FFFBEA;
+            /* nền vàng rất nhạt */
+            --header-color: #FFF1A8;
+            /* header vàng pastel */
+            --hover-color: #F3E37C;
+            /* hover dịu, không gắt */
+            --aside-color: #FFE680;
+            /* aside nổi nhẹ */
+            --note-color: #FFEB99;
+            /* note êm mắt */
+        }
+        html{
+            padding: 0px;
+            background-color: var(--aside-color);
+        }
+        main article{
+            position: fixed;
+            top: calc(50% - 350px);
+            right: calc(50% - 200px);
+            display: flex;
+            background-color: var(--background-color);
+            height: 400px;
+            width: 400px;
+            margin: 100px auto;
+            border: 1px solid rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 50px 10px;
+        }
+
+        main article div{
+            width: 90%;
+            display: flex;
+            justify-content: start;
+            gap: 10px;
+        }
+
+        main article input[type="text"]{
+            height: 8%;
+            width: 90%;
+            font-size: 20px;
+        }
+
+        main article button{
+            height: 8%;
+            width: 30%;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <main>
+        <article id="container">
+            <h1>login</h1>
+            <input id="username" placeholder="username" type="text">
+            <input id="password" placeholder="password" type="text">
+            <div>
+                <p>remeber you?</p>
+                <input id="checkbox" type="checkbox">
+            </div>
+            <button id="login_btn">login</button>
+        </article>
+    </main>
+<script type="module" src="js/user_auth.js"></script>
+</body>
+
+</html>

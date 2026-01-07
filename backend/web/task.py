@@ -15,7 +15,7 @@ from service import task as service
 
 router = APIRouter(prefix="/task")
 
-@router.get("/", response_model = list[Task_Response])
+@router.get("/", response_model = list[Task])
 def get_all(user_id: int = Depends(get_current_user_id),db: Connection = Depends(get_db)):
     return service.get_all(user_id,db)
 
@@ -39,7 +39,7 @@ def get_one(id: int,user_id : int = Depends(get_current_user_id), db: Connection
             detail=exc.msg
         )
     
-@router.patch("/{header}")
+@router.patch("/{id}")
 def modify(id: int, task: Task_Create_by_User,user_id: int = Depends(get_current_user_id), db:Connection = Depends(get_db)):
     try:
         return service.modify(id,user_id,task,db)
