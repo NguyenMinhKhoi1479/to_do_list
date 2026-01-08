@@ -11,8 +11,8 @@ export async function get_one(id) {
 }
 
 export async function create_task(task) {
-    const res = await apiFetch("/task",{
-        method :"POST",
+    const res = await apiFetch("/task", {
+        method: "POST",
         body: JSON.stringify({
             id: task.id,
             header: task.header,
@@ -26,12 +26,15 @@ export async function create_task(task) {
 }
 
 export async function delete_task(id) {
-    const res = await apiFetch(`/task/${id}`,{method: "DELETE"})
-    return res.json()
+    const res = await apiFetch(`/task/${id}`, {
+        method: "DELETE", body: JSON.stringify({
+            id: id
+        })
+    })
 }
 
-export async function modify_task(id, task){
-    const res = await apiFetch(`/task/${id}`,{
+export async function modify_task(id, task) {
+    const res = await apiFetch(`/task/${id}`, {
         method: "PATCH",
         body: JSON.stringify({
             header: task.header,

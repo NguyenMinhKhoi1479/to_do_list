@@ -49,7 +49,7 @@ def modify(id: int, task: Task_Create_by_User,user_id: int = Depends(get_current
             detail=exc.msg
         )
 
-@router.delete("/{header}")
+@router.delete("/{id}")
 def delete(id: int, user_id: int = Depends(get_current_user_id), db: Connection = Depends(get_db)):
     try: 
         return service.delete(id,user_id,db)
